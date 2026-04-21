@@ -23,7 +23,7 @@ library(here)
 library(tidyverse)
 library(patchwork)
 
-watershed <- read.csv(here("HW1", "p301.csv")) |>
+watershed <- read.csv(here("Week1", "data", "p301.csv")) |>
   mutate(temp_mean = (tmax + tmin) / 2)
 ```
 
