@@ -7,6 +7,6 @@ editor: visual
 ## Conflict
 
 ```{r}
-1 + 1
+2 + 2
 ```
 
