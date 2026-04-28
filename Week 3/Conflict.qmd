@@ -1,0 +1,12 @@
+---
+title: "Conflict"
+format: html
+editor: visual
+---
+
+## Conflict
+
+```{r}
+1 + 1
+```
+

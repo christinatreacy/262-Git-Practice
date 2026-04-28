@@ -22,10 +22,7 @@ p301_yearly <- p301 |>
 mean(p301_yearly$percent_streamflow)
 ```
 
-You can add options to executable code like this
-
 ```{r}
 sd(p301_yearly$percent_streamflow)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
