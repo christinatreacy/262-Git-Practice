@@ -1,0 +1,40 @@
+---
+title: "HW2"
+author: "Christina Treacy"
+date: "May 7, 2026"
+format: pdf
+editor: visual
+---
+
+```{r}
+#install.packages("dataRetrieval")
+library(dataRetrieval)
+library(tidyverse)
+```
+
+You can add options to executable code like this
+
+```{r}
+siteNumbers <- c("14211720", "14211010", "14166000")
+parameterCd <- "00010" # water temperature
+startDate <- "2010-01-01"
+endDate <- "2023-12-31"
+temp_data <- readNWISdv(siteNumbers, parameterCd, startDate, endDate)
+
+# rename columns for clarity
+colnames(temp_data) <- c("agency_cd", "site_no", "Date", "temp_C")
+# extract some date info for use later
+temp_data$month = month(temp_data$Date, label=TRUE)
+temp_data$year = year(temp_data$Date)
+
+# check by plotting
+ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
+geom_line() +
+labs(title="Stream Temperature at Willamette River Sites",
+x="Date", y="Temperature (°C)", color="Site Number") +
+theme_minimal()
+
+write.csv(temp_data, "tempdata.csv", row.names = FALSE)
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).

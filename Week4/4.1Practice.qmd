@@ -1,0 +1,132 @@
+---
+title: "Week4Practice"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+
+```
+
+Write the R code to create test data where we are simulating how many bear-visitor encounters are likely, if we know that
+
+-   the number of encounters per day follows a Poisson distribution with a mean of 1 encounter per day
+
+-   there are 1000 visitors
+
+We want to simulate how many encounters they have Generate sample data and plot the distribution of encounters
+
+```{r}
+#| echo: false
+bearencounters = rpois(1000, lambda = 1)
+ggplot(data.frame(bearencounters=bearencounters), aes(bearencounters))+geom_histogram()
+```
+
+Whats the maximum number of encounters any visitor had? --\> 4 encounters
+
+On your own with the airquality data set
+
+1)  find the median Wind speed
+2)  Sample 10 Wind speed measurements
+3)  compute their median
+
+Submit both on Canvas quiz
+
+```{r}
+
+data()
+
+# Lets look at New York Air Quality Measurement
+# load into your R environment
+data(airquality)
+# learn about dataset
+help(airquality)
+# a good way to see structure of data
+str(airquality)
+attributes(airquality)
+
+# does Ozone correlate with air temperature
+ggplot(airquality, aes(x=Temp, y=Ozone))+geom_point()+ggtitle("Ozone vs Temperature")
+
+# lets say we are testing a new product and we want a sample of 5 ozone measurement that conforms to the distribution in this dataset
+ozone_sample = sample(airquality$Ozone, size=5, replace=F)
+ozone_sample
+# this works but we have some NA values - maybe subset
+airquality_clean = na.omit(airquality)
+
+# Issue 2 - we can't link that Ozone with other measurements in the dataset - we need to sample the row number instead of ozone
+ozone_sample = sample(1:nrow(airquality_clean), size=5, replace=F)
+ozone_sample
+airquality_clean[ozone_sample,]
+# plot our sample days
+
+ggplot(airquality_clean, aes(x=Temp, y=Ozone))+geom_point()+
+  geom_point(data=data.frame(Temp=airquality_clean$Temp[ozone_sample], Ozone=airquality_clean$Ozone[ozone_sample]), color="red", size=3)
+
+##########################
+
+#median wind speed
+median(airquality$Wind) #9.7
+
+#Sample 10 Wind speed measurements
+wind_sample = sample(airquality$Wind, size=10, replace=F)
+wind_sample #  11.5 10.9  9.7  6.9 16.6  4.6 14.9  8.0 11.5  8.6
+
+#compute their median
+median(wind_sample) #10.3
+
+```
+
+In a quarto document
+
+-   create a new population of some creature (could be mythical)
+-   sample from the population
+-   use summary to explore the distribution of your sample
+
+## But I don't want a factor
+
+Sometimes you don't want factors and R thinks something should be How to change back? **as.numeric** makes sense ...but
+
+```{r fishes}
+
+# create vector of possible fish 
+possible.butterfly = c("monarch","swallowtail","painted lady","cabbage white","red admiral", "malachite")
+
+# we can use sample to simulate a random recording of catch by fisherman, lets say we pick 20 fish from the net
+
+catch1 = base::sample(possible.butterfly, size=20, replace=T)
+# because possible.fish was a factor catch1 will be a factor
+catch1
+
+summary(catch1)
+# if we want summary to be more useful - make this a factor
+catch1 = as.factor(catch1)
+```
+
+cabbage white malachite monarch painted lady red admiral swallowtail 3 2 3 5 4 3
+
+```{r}
+# to quickly get frequencies of different fish and to plot 
+summary(catch1)
+plot(catch1, col="blue")
+
+
+# we can also use summary to explore and return information about the distribution
+# mean frequency of a particular type of fish
+mean(summary(catch1))
+
+# maximum frequency
+max(summary(catch1))
+
+# which fish was most frequently caught
+which.max(summary(catch1))
+
+#to get just the name 
+names(which.max(summary(catch1)))
+
+numeric_sample = as.numeric(catch1)
+sum(numeric_sample)
+numeric_sample
+
+```
