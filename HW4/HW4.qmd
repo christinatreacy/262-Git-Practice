@@ -1,0 +1,43 @@
+---
+title: "Assignment 4: Building A Function"
+author: "Christina Treacy"
+date: "May 14, 2026"
+format: pdf
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Contract
+This function computes a biodiversity index score using Simpson's Index (D), where inputs are the number of individuals of each species(n_i) and the total number of individuals of all species (N), and outputs are values between 0 and 1. This index measures the probability that two individuals randomly selected from a sample belong to the same species, with lower output values associated with lower diversity.
+
+The function is defined by the following equation:
+D = sum((n_i * (n_i - 1)) / (N * (N-1)))
+
+First, we will load my function from the R file I saved it to.
+
+```{r}
+library(tidyverse)
+library(here)
+# source the function from a file 
+source(here("HW4/biodiv_index_D.R"))
+```
+
+Next, we will calculate values for 3 different species within a population.
+
+```{r}
+
+species1 = biodiv_index_D(143, 685)
+species2 = biodiv_index_D(n_i=87, N=685)
+species3 = biodiv_index_D(n_i=201, N=685)
+
+species1
+species2
+species3
+```
+D for species 1 = 0.04333888
+D for species 2 = 0.01596875
+D for species 3 = 0.08579844
+
